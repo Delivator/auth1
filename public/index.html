@@ -5,13 +5,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title><%= htmlWebpackPlugin.options.title %></title>
+    <title>auth1 - Decentralized Authenticator App</title>
   </head>
   <body>
     <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+      <strong>We're sorry but auth1 doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+    <!-- Set global portal url -->
+    <script>
+      window.PORTAL = new URL(localStorage.getItem("skynet-portal-api") ?? "https://siasky.net");
+      fetch("", { method: "HEAD" })
+        .then((response) => response.headers)
+        .then((headers) => {
+          window.PORTAL = new URL(headers.get("skynet-portal-api") ?? "https://siasky.net");
+          localStorage.setItem("skynet-portal-api", window.PORTAL.origin)
+        });
+    </script>
   </body>
 </html>
