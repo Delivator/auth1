@@ -35,7 +35,7 @@
       </div>
     </v-app-bar>
 
-    <v-btn fab x-large bottom right absolute class="ma-6">
+    <v-btn fab x-large bottom right absolute class="ma-6 mb-12">
       <v-icon>add</v-icon>
     </v-btn>
 
