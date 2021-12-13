@@ -1,11 +1,11 @@
 <template>
   <div class="text-center">
     <v-dialog :value="show" width="500" @click:outside="close">
-      <v-card>
-        <v-card-title class="text-h5 primary">Add New Account</v-card-title>
+      <v-form @submit="addAccount" ref="form" v-model="valid">
+        <v-card>
+          <v-card-title class="text-h5 primary">Add New Account</v-card-title>
 
-        <div class="ma-4">
-          <v-form @submit="addAccount" ref="form" v-model="valid">
+          <div class="ma-4">
             <v-tooltip v-if="logo" bottom>
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
@@ -60,27 +60,33 @@
               v-model="secret"
               :rules="secretRules"
             ></v-text-field>
-          </v-form>
 
-          <input
-            class="file-input"
-            ref="file"
-            type="file"
-            accept="image/*"
-            @change="uploadLogo"
-          />
-        </div>
+            <input
+              class="file-input"
+              ref="file"
+              type="file"
+              accept="image/*"
+              @change="uploadLogo"
+            />
+          </div>
 
-        <v-divider></v-divider>
+          <v-divider></v-divider>
 
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="error" text @click="close">Cancel</v-btn>
-          <v-btn color="primary" text @click="addAccount" :disabled="!valid">
-            Add
-          </v-btn>
-        </v-card-actions>
-      </v-card>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="error" text @click="close">Cancel</v-btn>
+            <v-btn
+              text
+              type="submit"
+              color="primary"
+              @click="addAccount"
+              :disabled="!valid"
+            >
+              Add
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-form>
     </v-dialog>
   </div>
 </template>
@@ -106,7 +112,10 @@ export default {
     secret: "",
     valid: true,
     nameRules: [(v) => !!v || "Name is required"],
-    secretRules: [(v) => !!v || "Secret is required"],
+    secretRules: [
+      (v) => !!v || "Secret is required",
+      (v) => /^[A-Z2-7=]+$/.test(v) || "Invalid Secret",
+    ],
     imgLoading: false,
   }),
 

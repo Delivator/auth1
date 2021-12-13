@@ -50,6 +50,7 @@ const store = new Vuex.Store({
     userID: null,
     profile: null,
     loggedIn: false,
+    appLoading: false,
     skynetClient: client,
     userSettings: {
       ...defaultUserSettings,
@@ -74,7 +75,7 @@ const store = new Vuex.Store({
       state.loggedIn = payload;
     },
 
-    setUserSettings(state, payload = {}) {
+    async setUserSettings(state, payload = {}) {
       const skipSync = payload.skipSync;
       delete payload.skipSync;
       const newUserSettings = {
@@ -83,13 +84,15 @@ const store = new Vuex.Store({
         ...payload,
       };
 
+      state.appLoading = true;
       state.userSettings = newUserSettings;
       localStorage.userSettings = JSON.stringify(newUserSettings);
       if (!skipSync && !!state.loggedIn)
-        state.mySky.setJSONEncrypted(
+        await state.mySky.setJSONEncrypted(
           `${dataDomain}/auth1UserSettings.json`,
           newUserSettings
         );
+      state.appLoading = false;
     },
   },
 

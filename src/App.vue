@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark height="50">
+    <v-app-bar app color="primary" dark height="50" hide-on-scroll>
       <div class="d-flex align-center">
         <h2>Auth1</h2>
       </div>
@@ -21,6 +21,13 @@
               <v-list-item-title>Log Out</v-list-item-title>
               <v-list-item-icon><v-icon>logout</v-icon></v-list-item-icon>
             </v-list-item>
+            <v-divider />
+            <v-list-item @click="dialog = true">
+              <v-list-item-title>Reset all Accounts</v-list-item-title>
+              <v-list-item-icon>
+                <v-icon color="red">delete_forever</v-icon>
+              </v-list-item-icon>
+            </v-list-item>
           </v-list>
         </v-menu>
       </div>
@@ -35,7 +42,30 @@
       </div>
     </v-app-bar>
 
+    <v-dialog v-model="dialog" max-width="290">
+      <v-card>
+        <v-card-title class="text-h5">Reset Everything?</v-card-title>
+        <v-card-text>
+          Reset app data and remove all accounts? This
+          <span class="font-weight-bold">cannot</span> be undone.
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" text @click="dialog = false">
+            Cancel
+          </v-btn>
+          <v-btn color="red darken-1" @click="resetAll">Reset</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
     <v-main>
+      <v-progress-linear
+        absolute
+        color="blue"
+        :active="appLoading"
+        :indeterminate="appLoading"
+      ></v-progress-linear>
       <router-view />
     </v-main>
   </v-app>
@@ -43,7 +73,7 @@
 
 <style>
 html {
-  overflow: auto;
+  overflow: auto !important;
 }
 </style>
 
@@ -52,7 +82,7 @@ export default {
   name: "App",
 
   data: () => ({
-    //
+    dialog: false,
   }),
 
   computed: {
@@ -81,6 +111,10 @@ export default {
     client() {
       return this.$store.state.skynetClient;
     },
+
+    appLoading() {
+      return this.$store.state.appLoading;
+    },
   },
 
   methods: {
@@ -90,6 +124,11 @@ export default {
 
     logOutUser() {
       this.$store.dispatch("logOutUser");
+    },
+
+    resetAll() {
+      this.$store.commit("setUserSettings", { accounts: [] });
+      this.dialog = false;
     },
   },
 };

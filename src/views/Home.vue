@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-row v-if="loggedIn" justify="center" class="mt-12">
+    <v-row v-if="loggedIn" justify="center" class="mt-md-12">
       <v-col sm="8" md="6" lg="4" xl="3">
         <v-card>
           <v-toolbar>

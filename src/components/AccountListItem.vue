@@ -51,7 +51,7 @@
         </v-list-item-icon>
       </v-list-item>
     </v-hover>
-    <v-divider v-if="index !== length - 1" inset></v-divider>
+    <v-divider v-if="index != length - 1" inset />
   </div>
 </template>
 
@@ -97,7 +97,13 @@ export default {
     },
 
     generateCode() {
-      return twoFA.generateTOTP(this.item.secret).toString();
+      try {
+        const code = twoFA.generateTOTP(this.item.secret).toString();
+        return code;
+      } catch (error) {
+        console.error(error);
+        return "000000";
+      }
     },
 
     copyCode() {
