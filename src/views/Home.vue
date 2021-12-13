@@ -30,13 +30,13 @@ import AccountList from "../components/AccountList";
 export default {
   name: "Home",
 
-  data: () => ({
-    search: "",
-  }),
-
   components: {
     AccountList,
   },
+
+  data: () => ({
+    search: "",
+  }),
 
   computed: {
     loggedIn() {
@@ -50,7 +50,7 @@ export default {
     filteredAccounts() {
       if (!this.search) return this.accounts;
       return this.accounts.filter((account) =>
-        account.title.toLowerCase().includes(this.search.toLowerCase())
+        account.name.toLowerCase().includes(this.search.toLowerCase())
       );
     },
   },

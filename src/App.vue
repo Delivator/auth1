@@ -29,15 +29,11 @@
           <span class="mr-2">Login with MySky</span>
           <v-icon>login</v-icon>
         </v-btn>
-        <v-btn text v-else>
+        <v-btn text v-else disabled>
           <span class="mr-2">Loading MySky...</span>
         </v-btn>
       </div>
     </v-app-bar>
-
-    <v-btn fab large bottom right absolute class="ma-6 mb-16">
-      <v-icon>add</v-icon>
-    </v-btn>
 
     <v-main>
       <router-view />

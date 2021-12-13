@@ -15,6 +15,10 @@
         </v-col>
       </v-row>
     </v-container>
+    <v-btn fab large absolute class="add-btn" @click="showDialog = true">
+      <v-icon>add</v-icon>
+    </v-btn>
+    <AddAccountDialog :show.sync="showDialog" />
   </v-list>
 </template>
 
@@ -22,18 +26,27 @@
 .account-list {
   max-height: calc(100vh - 160px);
 }
+
+.add-btn {
+  bottom: 16px;
+  right: 16px;
+}
 </style>
 
 <script>
-import AccountListItem from "../components/AccountListItem.vue";
+import AddAccountDialog from "../components/AddAccountDialog";
+import AccountListItem from "../components/AccountListItem";
 
 export default {
   props: ["items"],
 
   components: {
+    AddAccountDialog,
     AccountListItem,
   },
 
-  data: () => ({}),
+  data: () => ({
+    showDialog: false,
+  }),
 };
 </script>

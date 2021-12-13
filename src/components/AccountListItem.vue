@@ -4,17 +4,22 @@
       <v-list-item @click="copyCode()">
         <v-list-item-icon class="text-center">
           <v-avatar v-if="item.logo" size="24" tile class="mt-4">
-            <img :src="item.logo" alt="Account Logo" />
+            <img :src="portalSrc(item.logo)" alt="Account Logo" />
           </v-avatar>
-          <v-icon v-else class="mt-3">apps</v-icon>
+          <v-icon v-else class="mt-3">person</v-icon>
         </v-list-item-icon>
         <v-list-item-content>
-          <v-list-item-title v-text="item.title" class="text-h5">
+          <v-list-item-title v-text="item.name" class="text-h5">
           </v-list-item-title>
           <v-list-item-subtitle class="text-h6 font-weight-light">
             <span class="mr-2">{{ code.substr(0, 3) }}</span>
             <span class="mr-1">{{ code.substr(3) }}</span>
-            <v-icon small color="grey" :class="{ 'on-hover': hover }">
+            <v-icon
+              small
+              color="grey"
+              class="copy-icon"
+              :class="{ 'on-hover': hover }"
+            >
               content_copy
             </v-icon>
           </v-list-item-subtitle>
@@ -33,12 +38,12 @@
 </template>
 
 <style scoped>
-.v-icon {
+.copy-icon {
   transition: opacity 0.2s ease-in-out;
   opacity: 0;
 }
 
-.v-icon.on-hover {
+.copy-icon.on-hover {
   opacity: 1;
 }
 </style>
@@ -77,6 +82,10 @@ export default {
 
     copyCode() {
       navigator.clipboard.writeText(this.code);
+    },
+
+    portalSrc(skylink) {
+      return window.PORTAL + skylink.substr(6);
     },
   },
 };

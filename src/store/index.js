@@ -39,68 +39,7 @@ async function initMySky() {
 initMySky();
 
 const defaultUserSettings = {
-  accounts: [
-    // {
-    //   title: "Kraken",
-    //   logo: "https://siasky.net/AADBAcdjd8c4sMiML2G4gh0qJGS6-1tBvUezuaHhvW5hmA",
-    //   secret: "A",
-    // },
-    // {
-    //   title: "Namebase",
-    //   logo: "https://siasky.net/GABILtgSJZY-lwUizz1LApEpWzrXjW1E0NYIcNmMNtl-kQ",
-    //   secret: "BC",
-    // },
-    // {
-    //   title: "Kraken",
-    //   logo: "https://siasky.net/AADBAcdjd8c4sMiML2G4gh0qJGS6-1tBvUezuaHhvW5hmA",
-    //   secret: "A",
-    // },
-    // {
-    //   title: "Namebase",
-    //   logo: "https://siasky.net/GABILtgSJZY-lwUizz1LApEpWzrXjW1E0NYIcNmMNtl-kQ",
-    //   secret: "BC",
-    // },
-    // {
-    //   title: "Kraken",
-    //   logo: "https://siasky.net/AADBAcdjd8c4sMiML2G4gh0qJGS6-1tBvUezuaHhvW5hmA",
-    //   secret: "A",
-    // },
-    // {
-    //   title: "Namebase",
-    //   logo: "https://siasky.net/GABILtgSJZY-lwUizz1LApEpWzrXjW1E0NYIcNmMNtl-kQ",
-    //   secret: "BC",
-    // },
-    // {
-    //   title: "Kraken",
-    //   logo: "https://siasky.net/AADBAcdjd8c4sMiML2G4gh0qJGS6-1tBvUezuaHhvW5hmA",
-    //   secret: "A",
-    // },
-    // {
-    //   title: "Namebase",
-    //   logo: "https://siasky.net/GABILtgSJZY-lwUizz1LApEpWzrXjW1E0NYIcNmMNtl-kQ",
-    //   secret: "BC",
-    // },
-    // {
-    //   title: "Kraken",
-    //   logo: "https://siasky.net/AADBAcdjd8c4sMiML2G4gh0qJGS6-1tBvUezuaHhvW5hmA",
-    //   secret: "A",
-    // },
-    // {
-    //   title: "Namebase",
-    //   logo: "https://siasky.net/GABILtgSJZY-lwUizz1LApEpWzrXjW1E0NYIcNmMNtl-kQ",
-    //   secret: "BC",
-    // },
-    // {
-    //   title: "Kraken",
-    //   logo: "https://siasky.net/AADBAcdjd8c4sMiML2G4gh0qJGS6-1tBvUezuaHhvW5hmA",
-    //   secret: "A",
-    // },
-    // {
-    //   title: "Namebase",
-    //   logo: "https://siasky.net/GABILtgSJZY-lwUizz1LApEpWzrXjW1E0NYIcNmMNtl-kQ",
-    //   secret: "BC",
-    // },
-  ],
+  accounts: [],
 };
 
 let localUserSettings = JSON.parse(localStorage.getItem("userSettings"));

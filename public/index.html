@@ -20,7 +20,7 @@
         .then((response) => response.headers)
         .then((headers) => {
           window.PORTAL = new URL(headers.get("skynet-portal-api") ?? "https://siasky.net");
-          localStorage.setItem("skynet-portal-api", window.PORTAL.origin)
+          localStorage.setItem("skynet-portal-api", window.PORTAL.origin);
         });
     </script>
   </body>
