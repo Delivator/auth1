@@ -39,7 +39,7 @@ async function initMySky() {
 initMySky();
 
 const defaultUserSettings = {
-  apps: [
+  accounts: [
     // {
     //   title: "Kraken",
     //   logo: "https://siasky.net/AADBAcdjd8c4sMiML2G4gh0qJGS6-1tBvUezuaHhvW5hmA",

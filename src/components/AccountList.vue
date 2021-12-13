@@ -1,6 +1,6 @@
 <template>
-  <v-list height="800" class="overflow-auto app-list">
-    <AppListItem
+  <v-list height="800" class="overflow-auto account-list">
+    <AccountListItem
       v-for="(item, i) in items"
       :length="items.length"
       :item="item"
@@ -19,19 +19,19 @@
 </template>
 
 <style scoped>
-.app-list {
+.account-list {
   max-height: calc(100vh - 160px);
 }
 </style>
 
 <script>
-import AppListItem from "../components/AppListItem.vue";
+import AccountListItem from "../components/AccountListItem.vue";
 
 export default {
   props: ["items"],
 
   components: {
-    AppListItem,
+    AccountListItem,
   },
 
   data: () => ({}),

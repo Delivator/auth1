@@ -17,7 +17,7 @@
               </template>
             </v-text-field>
           </v-toolbar>
-          <AppList :items="filteredApps" />
+          <AccountList :items="filteredAccounts" />
         </v-card>
       </v-col>
     </v-row>
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import AppList from "../components/AppList";
+import AccountList from "../components/AccountList";
 
 export default {
   name: "Home",
@@ -35,7 +35,7 @@ export default {
   }),
 
   components: {
-    AppList,
+    AccountList,
   },
 
   computed: {
@@ -43,14 +43,14 @@ export default {
       return this.$store.state.loggedIn;
     },
 
-    apps() {
-      return this.$store.state.userSettings.apps ?? [];
+    accounts() {
+      return this.$store.state.userSettings.accounts ?? [];
     },
 
-    filteredApps() {
-      if (!this.search) return this.apps;
-      return this.apps.filter((app) =>
-        app.title.toLowerCase().includes(this.search.toLowerCase())
+    filteredAccounts() {
+      if (!this.search) return this.accounts;
+      return this.accounts.filter((account) =>
+        account.title.toLowerCase().includes(this.search.toLowerCase())
       );
     },
   },

@@ -4,7 +4,7 @@
       <v-list-item @click="copyCode()">
         <v-list-item-icon class="text-center">
           <v-avatar v-if="item.logo" size="24" tile class="mt-4">
-            <img :src="item.logo" alt="App Logo" />
+            <img :src="item.logo" alt="Account Logo" />
           </v-avatar>
           <v-icon v-else class="mt-3">apps</v-icon>
         </v-list-item-icon>
