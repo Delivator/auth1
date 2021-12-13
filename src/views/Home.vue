@@ -4,14 +4,10 @@
       <v-col sm="8" md="6" lg="4" xl="3">
         <v-card>
           <v-toolbar>
-            <v-app-bar-nav-icon></v-app-bar-nav-icon>
-            <v-toolbar-title>auth1</v-toolbar-title>
-            <v-spacer></v-spacer>
-
             <v-text-field
               v-model="search"
               label="Search"
-              class="mt-5"
+              class="mt-6"
               clearable
               dense
               solo
@@ -36,10 +32,6 @@ export default {
 
   data: () => ({
     search: "",
-    apps: [
-      { title: "Kraken", secret: "A" },
-      { title: "Namebase", secret: "BC" },
-    ],
   }),
 
   components: {
@@ -49,6 +41,10 @@ export default {
   computed: {
     loggedIn() {
       return this.$store.state.loggedIn;
+    },
+
+    apps() {
+      return this.$store.state.userSettings.apps ?? [];
     },
 
     filteredApps() {

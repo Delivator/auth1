@@ -1,14 +1,14 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark>
+    <v-app-bar app color="primary" dark height="50">
       <div class="d-flex align-center">
-        <h1>auth1</h1>
+        <h2>Auth1</h2>
       </div>
 
       <v-spacer></v-spacer>
 
       <div v-if="loggedIn">
-        <span class="mx-4 text-h6">{{ username }}</span>
+        <span class="mr-4 text-h6">{{ username }}</span>
         <v-menu rounded="lg" offset-y>
           <template v-slot:activator="{ attrs, on }">
             <v-btn fab small v-bind="attrs" v-on="on">
@@ -35,7 +35,7 @@
       </div>
     </v-app-bar>
 
-    <v-btn fab x-large bottom right absolute class="ma-6 mb-16">
+    <v-btn fab large bottom right absolute class="ma-6 mb-16">
       <v-icon>add</v-icon>
     </v-btn>
 

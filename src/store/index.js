@@ -38,6 +38,73 @@ async function initMySky() {
 // call async setup function
 initMySky();
 
+const defaultUserSettings = {
+  apps: [
+    // {
+    //   title: "Kraken",
+    //   logo: "https://siasky.net/AADBAcdjd8c4sMiML2G4gh0qJGS6-1tBvUezuaHhvW5hmA",
+    //   secret: "A",
+    // },
+    // {
+    //   title: "Namebase",
+    //   logo: "https://siasky.net/GABILtgSJZY-lwUizz1LApEpWzrXjW1E0NYIcNmMNtl-kQ",
+    //   secret: "BC",
+    // },
+    // {
+    //   title: "Kraken",
+    //   logo: "https://siasky.net/AADBAcdjd8c4sMiML2G4gh0qJGS6-1tBvUezuaHhvW5hmA",
+    //   secret: "A",
+    // },
+    // {
+    //   title: "Namebase",
+    //   logo: "https://siasky.net/GABILtgSJZY-lwUizz1LApEpWzrXjW1E0NYIcNmMNtl-kQ",
+    //   secret: "BC",
+    // },
+    // {
+    //   title: "Kraken",
+    //   logo: "https://siasky.net/AADBAcdjd8c4sMiML2G4gh0qJGS6-1tBvUezuaHhvW5hmA",
+    //   secret: "A",
+    // },
+    // {
+    //   title: "Namebase",
+    //   logo: "https://siasky.net/GABILtgSJZY-lwUizz1LApEpWzrXjW1E0NYIcNmMNtl-kQ",
+    //   secret: "BC",
+    // },
+    // {
+    //   title: "Kraken",
+    //   logo: "https://siasky.net/AADBAcdjd8c4sMiML2G4gh0qJGS6-1tBvUezuaHhvW5hmA",
+    //   secret: "A",
+    // },
+    // {
+    //   title: "Namebase",
+    //   logo: "https://siasky.net/GABILtgSJZY-lwUizz1LApEpWzrXjW1E0NYIcNmMNtl-kQ",
+    //   secret: "BC",
+    // },
+    // {
+    //   title: "Kraken",
+    //   logo: "https://siasky.net/AADBAcdjd8c4sMiML2G4gh0qJGS6-1tBvUezuaHhvW5hmA",
+    //   secret: "A",
+    // },
+    // {
+    //   title: "Namebase",
+    //   logo: "https://siasky.net/GABILtgSJZY-lwUizz1LApEpWzrXjW1E0NYIcNmMNtl-kQ",
+    //   secret: "BC",
+    // },
+    // {
+    //   title: "Kraken",
+    //   logo: "https://siasky.net/AADBAcdjd8c4sMiML2G4gh0qJGS6-1tBvUezuaHhvW5hmA",
+    //   secret: "A",
+    // },
+    // {
+    //   title: "Namebase",
+    //   logo: "https://siasky.net/GABILtgSJZY-lwUizz1LApEpWzrXjW1E0NYIcNmMNtl-kQ",
+    //   secret: "BC",
+    // },
+  ],
+};
+
+let localUserSettings = JSON.parse(localStorage.getItem("userSettings"));
+
 const store = new Vuex.Store({
   state: {
     mySky: null,
@@ -45,6 +112,10 @@ const store = new Vuex.Store({
     profile: null,
     loggedIn: false,
     skynetClient: client,
+    userSettings: {
+      ...defaultUserSettings,
+      ...(localUserSettings ?? defaultUserSettings),
+    },
   },
 
   mutations: {
@@ -62,6 +133,24 @@ const store = new Vuex.Store({
 
     setLoggedIn: (state, payload) => {
       state.loggedIn = payload;
+    },
+
+    setUserSettings(state, payload = {}) {
+      const skipSync = payload.skipSync;
+      delete payload.skipSync;
+      const newUserSettings = {
+        ...defaultUserSettings,
+        ...state.userSettings,
+        ...payload,
+      };
+
+      state.userSettings = newUserSettings;
+      localStorage.userSettings = JSON.stringify(newUserSettings);
+      if (!skipSync && !!state.loggedIn)
+        state.mySky.setJSONEncrypted(
+          `${dataDomain}/userSettings.json`,
+          newUserSettings
+        );
     },
   },
 
@@ -106,6 +195,20 @@ const store = new Vuex.Store({
         });
       } catch (error) {
         console.error("error getting profile");
+        console.error(error);
+      }
+    },
+
+    async getUserSettings({ commit, state }) {
+      if (!state.loggedIn) return;
+
+      try {
+        let { data } = await state.mySky.getJSONEncrypted(
+          `${dataDomain}/userSettings.json`
+        );
+        if (data) commit("setUserSettings", { ...data, skipSync: true });
+      } catch (error) {
+        console.error("error getting user settings");
         console.error(error);
       }
     },
