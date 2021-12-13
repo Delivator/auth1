@@ -87,7 +87,7 @@ const store = new Vuex.Store({
       localStorage.userSettings = JSON.stringify(newUserSettings);
       if (!skipSync && !!state.loggedIn)
         state.mySky.setJSONEncrypted(
-          `${dataDomain}/userSettings.json`,
+          `${dataDomain}/auth1UserSettings.json`,
           newUserSettings
         );
     },

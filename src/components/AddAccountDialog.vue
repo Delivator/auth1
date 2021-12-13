@@ -146,6 +146,8 @@ export default {
         secret: this.secret,
       });
       this.$store.commit("setUserSettings", { accounts });
+      this.name = "";
+      this.secret = "";
       this.close();
     },
 

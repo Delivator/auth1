@@ -25,6 +25,24 @@
           </v-list-item-subtitle>
         </v-list-item-content>
         <v-list-item-icon>
+          <v-tooltip left>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                fab
+                text
+                small
+                color="error"
+                v-on="on"
+                v-bind="attrs"
+                class="remove-btn mt-1 mr-2"
+                @click="removeAccount(index)"
+                :class="{ 'on-hover': hover }"
+              >
+                <v-icon>delete</v-icon>
+              </v-btn>
+            </template>
+            <span>Remove Account</span>
+          </v-tooltip>
           <v-progress-circular
             class="mt-2"
             :color="timeColor(countdown)"
@@ -38,12 +56,13 @@
 </template>
 
 <style scoped>
-.copy-icon {
+.copy-icon,
+.remove-btn {
   transition: opacity 0.2s ease-in-out;
   opacity: 0;
 }
 
-.copy-icon.on-hover {
+.on-hover {
   opacity: 1;
 }
 </style>
@@ -58,6 +77,7 @@ export default {
     return {
       countdown: (new Date().getSeconds() % 30) + 1,
       code: this.generateCode(),
+      showContext: true,
     };
   },
 
@@ -86,6 +106,12 @@ export default {
 
     portalSrc(skylink) {
       return window.PORTAL + skylink.substr(6);
+    },
+
+    removeAccount(index) {
+      let accounts = this.$store.state.userSettings.accounts;
+      accounts.splice(index, 1);
+      this.$store.commit("setUserSettings", { accounts });
     },
   },
 };
