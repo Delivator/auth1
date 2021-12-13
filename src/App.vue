@@ -35,7 +35,7 @@
       </div>
     </v-app-bar>
 
-    <v-btn fab x-large bottom right absolute class="ma-6 mb-12">
+    <v-btn fab x-large bottom right absolute class="ma-6 mb-16">
       <v-icon>add</v-icon>
     </v-btn>
 
@@ -44,6 +44,12 @@
     </v-main>
   </v-app>
 </template>
+
+<style>
+html {
+  overflow: auto;
+}
+</style>
 
 <script>
 export default {

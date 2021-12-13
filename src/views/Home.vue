@@ -8,16 +8,20 @@
             <v-toolbar-title>auth1</v-toolbar-title>
             <v-spacer></v-spacer>
 
-            <v-text-field label="Search" dense solo class="mt-5">
+            <v-text-field
+              v-model="search"
+              label="Search"
+              class="mt-5"
+              clearable
+              dense
+              solo
+            >
               <template v-slot:append>
-                <v-icon>search</v-icon>
+                <v-icon v-if="!search">search</v-icon>
               </template>
             </v-text-field>
-            <!-- <v-btn icon>
-              <v-icon>search</v-icon>
-            </v-btn> -->
           </v-toolbar>
-          <AppList :items="apps" />
+          <AppList :items="filteredApps" />
         </v-card>
       </v-col>
     </v-row>
@@ -31,7 +35,11 @@ export default {
   name: "Home",
 
   data: () => ({
-    apps: [{ title: "Kraken" }, { title: "Namebase" }],
+    search: "",
+    apps: [
+      { title: "Kraken", secret: "A" },
+      { title: "Namebase", secret: "BC" },
+    ],
   }),
 
   components: {
@@ -41,6 +49,13 @@ export default {
   computed: {
     loggedIn() {
       return this.$store.state.loggedIn;
+    },
+
+    filteredApps() {
+      if (!this.search) return this.apps;
+      return this.apps.filter((app) =>
+        app.title.toLowerCase().includes(this.search.toLowerCase())
+      );
     },
   },
 };
