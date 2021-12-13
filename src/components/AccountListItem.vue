@@ -1,9 +1,9 @@
 <template>
   <div>
     <v-hover v-slot="{ hover }">
-      <v-list-item @click="copyCode()">
+      <v-list-item @click="copyCode()" @mouseleave="copied = false">
         <v-list-item-icon class="text-center">
-          <v-avatar v-if="item.logo" size="24" tile class="mt-4">
+          <v-avatar v-if="item.logo" size="24" tile class="mt-3">
             <img :src="portalSrc(item.logo)" alt="Account Logo" />
           </v-avatar>
           <v-icon v-else class="mt-3">person</v-icon>
@@ -14,14 +14,21 @@
           <v-list-item-subtitle class="text-h6 font-weight-light">
             <span class="mr-2">{{ code.substr(0, 3) }}</span>
             <span class="mr-1">{{ code.substr(3) }}</span>
-            <v-icon
-              small
-              color="grey"
-              class="copy-icon"
-              :class="{ 'on-hover': hover }"
-            >
-              content_copy
-            </v-icon>
+            <v-tooltip bottom :value="copied">
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon
+                  small
+                  v-on="on"
+                  color="grey"
+                  v-bind="attrs"
+                  class="copy-icon"
+                  :class="{ 'on-hover': hover }"
+                >
+                  content_copy
+                </v-icon>
+              </template>
+              <span>{{ copied ? "Copied" : "Click to copy" }}</span>
+            </v-tooltip>
           </v-list-item-subtitle>
         </v-list-item-content>
         <v-list-item-icon>
@@ -31,8 +38,8 @@
                 fab
                 text
                 small
-                color="error"
                 v-on="on"
+                color="error"
                 v-bind="attrs"
                 class="remove-btn mt-1 mr-2"
                 @click="removeAccount(index)"
@@ -76,8 +83,9 @@ export default {
   data() {
     return {
       countdown: (new Date().getSeconds() % 30) + 1,
-      code: this.generateCode(),
+      copied: false,
       showContext: true,
+      code: this.generateCode(),
     };
   },
 
@@ -108,6 +116,7 @@ export default {
 
     copyCode() {
       navigator.clipboard.writeText(this.code);
+      this.copied = true;
     },
 
     portalSrc(skylink) {

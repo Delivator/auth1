@@ -15,7 +15,14 @@
         </v-col>
       </v-row>
     </v-container>
-    <v-btn fab large absolute class="add-btn" @click="showDialog = true">
+    <v-btn
+      fab
+      large
+      absolute
+      color="blue"
+      class="add-btn"
+      @click="showDialog = true"
+    >
       <v-icon>add</v-icon>
     </v-btn>
     <AddAccountDialog :show.sync="showDialog" />
@@ -24,7 +31,7 @@
 
 <style scoped>
 .account-list {
-  max-height: calc(100vh - 80px);
+  max-height: calc(100vh - 86px);
 }
 
 .add-btn {
