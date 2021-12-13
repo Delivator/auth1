@@ -83,17 +83,19 @@ export default {
   data() {
     return {
       countdown: (new Date().getSeconds() % 30) + 1,
-      copied: false,
-      showContext: true,
       code: this.generateCode(),
+      showContext: true,
+      interval: null,
+      copied: false,
     };
   },
 
   mounted() {
-    setInterval(() => {
+    clearInterval(this.interval);
+    this.interval = setInterval(() => {
       this.countdown = (new Date().getSeconds() % 30) + 1;
       this.code = this.generateCode();
-    }, 100);
+    }, 1000);
   },
 
   methods: {

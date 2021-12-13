@@ -144,6 +144,7 @@ const store = new Vuex.Store({
     async getUserSettings({ commit, state }) {
       if (!state.loggedIn) return;
 
+      state.appLoading = true;
       try {
         let { data } = await state.mySky.getJSONEncrypted(
           `${dataDomain}/userSettings.json`
@@ -153,6 +154,7 @@ const store = new Vuex.Store({
         console.error("error getting user settings");
         console.error(error);
       }
+      state.appLoading = false;
     },
   },
 

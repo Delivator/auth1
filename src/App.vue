@@ -1,13 +1,25 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark height="50" hide-on-scroll>
+    <v-app-bar
+      app
+      :color="online ? 'primary' : 'red lighten-1'"
+      dark
+      height="50"
+      hide-on-scroll
+    >
       <div class="d-flex align-center">
         <h2>Auth1</h2>
       </div>
 
       <v-spacer></v-spacer>
 
-      <div v-if="loggedIn">
+      <div v-if="!online">
+        <v-btn text disabled>
+          <span>Network Offline</span>
+        </v-btn>
+      </div>
+
+      <div v-if="online && loggedIn">
         <span class="mr-4 text-h6">{{ username }}</span>
         <v-menu rounded="lg" offset-y>
           <template v-slot:activator="{ attrs, on }">
@@ -31,13 +43,13 @@
           </v-list>
         </v-menu>
       </div>
-      <div v-else>
+      <div v-if="online && !loggedIn">
         <v-btn text v-if="mySky" @click="logInUser">
           <span class="mr-2">Login with MySky</span>
           <v-icon>login</v-icon>
         </v-btn>
         <v-btn text v-else disabled>
-          <span class="mr-2">Loading MySky...</span>
+          <span>Loading MySky...</span>
         </v-btn>
       </div>
     </v-app-bar>
@@ -83,6 +95,7 @@ export default {
 
   data: () => ({
     dialog: false,
+    online: window.navigator.onLine,
   }),
 
   computed: {
@@ -130,6 +143,16 @@ export default {
       this.$store.commit("setUserSettings", { accounts: [] });
       this.dialog = false;
     },
+  },
+
+  mounted() {
+    window.addEventListener("offline", () => {
+      this.online = false;
+    });
+
+    window.addEventListener("online", () => {
+      this.online = true;
+    });
   },
 };
 </script>

@@ -147,7 +147,8 @@ export default {
       }
     },
 
-    addAccount() {
+    addAccount(event) {
+      event.preventDefault();
       let accounts = this.$store.state.userSettings.accounts;
       accounts.push({
         name: this.name,
