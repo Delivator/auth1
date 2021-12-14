@@ -19,8 +19,9 @@
         </v-btn>
       </div>
 
-      <div v-if="online && loggedIn">
-        <span class="mr-4 text-h6">{{ username }}</span>
+      <div v-if="online">
+        <span v-if="mySky" class="mr-4 text-h6">{{ username }}</span>
+        <span v-else class="mr-4 text-h6">Loading MySky...</span>
         <v-menu rounded="lg" offset-y>
           <template v-slot:activator="{ attrs, on }">
             <v-btn fab small v-bind="attrs" v-on="on">
@@ -29,13 +30,38 @@
           </template>
 
           <v-list>
-            <v-list-item @click="logOutUser">
+            <v-list-item v-if="loggedIn" @click="logOutUser">
               <v-list-item-title>Log Out</v-list-item-title>
               <v-list-item-icon><v-icon>logout</v-icon></v-list-item-icon>
+            </v-list-item>
+            <v-list-item v-else @click="logInUser" :disabled="!mySky">
+              <v-list-item-title v-if="mySky">
+                Login with MySky
+              </v-list-item-title>
+              <v-list-item-title v-else>Loading MySky...</v-list-item-title>
+              <v-list-item-icon><v-icon>login</v-icon></v-list-item-icon>
             </v-list-item>
             <v-list-item @click="reload">
               <v-list-item-title>Reload App</v-list-item-title>
               <v-list-item-icon><v-icon>refresh</v-icon></v-list-item-icon>
+            </v-list-item>
+            <v-list-item
+              href="https://github.com/Delivator/auth1"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <v-list-item-title>
+                GitHub
+                <v-icon small> open_in_new </v-icon>
+              </v-list-item-title>
+              <v-list-item-icon>
+                <img
+                  src="/img/Octicons-mark-github.svg"
+                  alt="GitHub logo"
+                  height="24"
+                  width="24"
+                />
+              </v-list-item-icon>
             </v-list-item>
             <v-divider />
             <v-list-item @click="dialog = true">
@@ -46,15 +72,6 @@
             </v-list-item>
           </v-list>
         </v-menu>
-      </div>
-      <div v-if="online && !loggedIn">
-        <v-btn text v-if="mySky" @click="logInUser">
-          <span class="mr-2">Login with MySky</span>
-          <v-icon>login</v-icon>
-        </v-btn>
-        <v-btn text v-else disabled>
-          <span>Loading MySky...</span>
-        </v-btn>
       </div>
     </v-app-bar>
 
