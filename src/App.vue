@@ -5,7 +5,6 @@
       :color="online ? 'primary' : 'red lighten-1'"
       dark
       height="50"
-      hide-on-scroll
     >
       <div class="d-flex align-center">
         <h2>Auth1</h2>

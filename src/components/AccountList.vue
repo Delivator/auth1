@@ -47,7 +47,7 @@
 
 <style scoped>
 .account-list {
-  max-height: calc(100vh - 86px);
+  max-height: calc(100vh - 130px);
 }
 
 .add-btn {
