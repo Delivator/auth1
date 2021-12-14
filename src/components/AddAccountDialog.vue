@@ -114,6 +114,7 @@
 
 <script>
 import QrScanner from "./QrScanner.vue";
+import parser from "otpauth-migration-parser";
 
 export default {
   props: ["show"],
@@ -192,7 +193,27 @@ export default {
       this.showScanner = false;
     },
 
+    async migrate(string) {
+      try {
+        const parsedDataList = await parser(string);
+        let accounts = this.$store.state.userSettings.accounts;
+        for (let otpSecretInfo of parsedDataList) {
+          accounts.push({
+            name: `${otpSecretInfo.issuer} (${otpSecretInfo.name})`,
+            logo: "",
+            secret: otpSecretInfo.secret,
+          });
+        }
+        this.$store.commit("setUserSettings", { accounts });
+        this.close();
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
     parseQr(string) {
+      if (string.startsWith("otpauth-migration://offline"))
+        return this.migrate(string);
       const keyUri = new URL(string);
       if (!keyUri || !keyUri?.pathname.startsWith("//totp/")) return;
       const label = decodeURIComponent(keyUri.pathname.substr(7)).split(":");
