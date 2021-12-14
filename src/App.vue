@@ -33,6 +33,10 @@
               <v-list-item-title>Log Out</v-list-item-title>
               <v-list-item-icon><v-icon>logout</v-icon></v-list-item-icon>
             </v-list-item>
+            <v-list-item @click="reload">
+              <v-list-item-title>Reload App</v-list-item-title>
+              <v-list-item-icon><v-icon>refresh</v-icon></v-list-item-icon>
+            </v-list-item>
             <v-divider />
             <v-list-item @click="dialog = true">
               <v-list-item-title>Reset all Accounts</v-list-item-title>
@@ -142,6 +146,19 @@ export default {
     resetAll() {
       this.$store.commit("setUserSettings", { accounts: [] });
       this.dialog = false;
+    },
+
+    reload() {
+      // unregister sw and reload
+      window.navigator.serviceWorker.getRegistration().then((reg) => {
+        if (reg) {
+          reg.unregister().then(() => {
+            window.location.reload(true);
+          });
+        } else {
+          window.location.reload(true);
+        }
+      });
     },
   },
 
