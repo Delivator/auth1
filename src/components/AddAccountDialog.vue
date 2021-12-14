@@ -1,5 +1,11 @@
 <template>
   <div class="text-center">
+    <QrScanner
+      :showScanner.sync="showScanner"
+      v-show="showScanner"
+      ref="scanner"
+      @onscan="onScan"
+    />
     <v-dialog :value="show" width="500" @click:outside="close">
       <v-form @submit="addAccount" ref="form" v-model="valid">
         <v-card>
@@ -72,7 +78,11 @@
 
           <v-divider></v-divider>
 
-          <v-card-actions>
+          <v-card-actions class="grey darken-4">
+            <v-btn outlined color="green" @click="openScanner">
+              QR-Scanner
+              <v-icon right>qr_code_scanner</v-icon>
+            </v-btn>
             <v-spacer></v-spacer>
             <v-btn color="error" text @click="close">Cancel</v-btn>
             <v-btn
@@ -103,8 +113,14 @@
 </style>
 
 <script>
+import QrScanner from "./QrScanner.vue";
+
 export default {
   props: ["show"],
+
+  components: {
+    QrScanner,
+  },
 
   data: () => ({
     name: "",
@@ -117,6 +133,7 @@ export default {
       (v) => /^[A-Z2-7=]+$/.test(v) || "Invalid Secret",
     ],
     imgLoading: false,
+    showScanner: false,
   }),
 
   computed: {
@@ -164,6 +181,46 @@ export default {
     portalSrc(skylink) {
       return window.PORTAL + skylink.substr(6);
     },
+
+    openScanner() {
+      this.showScanner = true;
+      this.$refs.scanner.startScanner();
+    },
+
+    closeScanner() {
+      this.$refs.scanner.stopScanner();
+      this.showScanner = false;
+    },
+
+    parseQr(string) {
+      const keyUri = new URL(string);
+      if (!keyUri || !keyUri?.pathname.startsWith("//totp/")) return;
+      const label = decodeURIComponent(keyUri.pathname.substr(7)).split(":");
+      const issuer = keyUri.searchParams.get("issuer");
+      const secret = keyUri.searchParams.get("secret");
+      if (!secret) return alert("Invalid QR Code");
+      const name = issuer
+        ? `${issuer} (${label[1]})`
+        : `${label[0]} (${label[1]})`;
+      this.name = name;
+      this.secret = secret;
+    },
+
+    onScan(string) {
+      this.parseQr(string);
+    },
+  },
+
+  mounted() {
+    document.addEventListener("keydown", (event) => {
+      switch (event.key) {
+        case "Escape":
+          if (this.showScanner) this.closeScanner();
+          break;
+        default:
+          break;
+      }
+    });
   },
 };
 </script>

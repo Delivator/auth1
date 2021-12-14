@@ -6,7 +6,7 @@ Powered by [Skynet](https://siasky.net/)
 
 # Screenshots
 
-![Screenshot](https://siasky.net/BAAzTc_qv9vJ0FoUn7sIOxIC8KncQnxwtNtAfU9kKYRzbw)
+[![Screenshot](https://siasky.net/BAAzTc_qv9vJ0FoUn7sIOxIC8KncQnxwtNtAfU9kKYRzbw)](https://auth1.hns.siasky.net/)
 
 ## Project setup
 ```
