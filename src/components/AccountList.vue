@@ -9,7 +9,7 @@
     />
     <v-container v-if="!loggedIn && items.length < 1">
       <v-row class="text-center mt-4">
-        <v-col v-if="loggedIn" cols="12">
+        <v-col cols="12">
           <h1>Not logged in</h1>
         </v-col>
         <v-col cols="12">

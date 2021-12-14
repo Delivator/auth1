@@ -1,5 +1,26 @@
 <template>
   <div>
+    <v-dialog v-model="dialog" max-width="290">
+      <v-card>
+        <v-card-title class="text-h5 grey darken-2">
+          Remove this account?
+        </v-card-title>
+        <v-card-text class="mt-4 body-1">
+          Are you sure you want to remove the account
+          <span v-text="item.name" class="font-weight-bold"></span>? This
+          <span class="font-weight-bold">cannot</span> be undone.
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" outlined @click="dialog = false">
+            Cancel
+          </v-btn>
+          <v-btn color="red darken-1" @click="removeAccount(index)">
+            Remove
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <v-hover v-slot="{ hover }">
       <v-list-item @click="copyCode()" @mouseleave="copied = false">
         <v-list-item-icon class="text-center">
@@ -42,7 +63,7 @@
                 color="error"
                 v-bind="attrs"
                 class="remove-btn mt-1 mr-2"
-                @click="removeAccount(index)"
+                @click="dialog = true"
                 :class="{ 'on-hover': hover }"
               >
                 <v-icon>delete</v-icon>
@@ -87,6 +108,7 @@ export default {
       showContext: true,
       interval: null,
       copied: false,
+      dialog: false,
     };
   },
 
@@ -129,6 +151,7 @@ export default {
       let accounts = this.$store.state.userSettings.accounts;
       accounts.splice(index, 1);
       this.$store.commit("setUserSettings", { accounts });
+      this.dialog = false;
     },
   },
 };

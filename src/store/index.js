@@ -28,6 +28,7 @@ async function initMySky() {
     store.commit("setLoggedIn", loggedIn);
     if (loggedIn) {
       store.commit("setUserID", await mySky.userID());
+      store.dispatch("getUserSettings");
       store.dispatch("getProfile");
     }
   } catch (e) {
