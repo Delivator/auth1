@@ -143,7 +143,7 @@ export default {
         const { skylink } = await this.client.uploadFile(file);
         this.logo = skylink;
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     },
 

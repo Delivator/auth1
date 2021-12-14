@@ -147,7 +147,7 @@ const store = new Vuex.Store({
       state.appLoading = true;
       try {
         let { data } = await state.mySky.getJSONEncrypted(
-          `${dataDomain}/userSettings.json`
+          `${dataDomain}/auth1UserSettings.json`
         );
         if (data) commit("setUserSettings", { ...data, skipSync: true });
       } catch (error) {
