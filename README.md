@@ -1,4 +1,4 @@
-# auth1 - Decentralized 2FA App
+# Auth1 - Decentralized 2FA App
 
 ## Project setup
 ```
