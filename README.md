@@ -6,7 +6,13 @@ Powered by [Skynet](https://siasky.net/)
 
 # Screenshots
 
-[![Screenshot](https://siasky.net/BAAzTc_qv9vJ0FoUn7sIOxIC8KncQnxwtNtAfU9kKYRzbw)](https://auth1.hns.siasky.net/)
+<a href="https://auth1.hns.siasky.net/" target="_blank" rel="noopener noreferrer">
+  <img src="https://siasky.net/nAAlJa8G0IKE8gHQLvWc-ze-lRY9MtScxzSxiP5vJUKxlw" alt="Auth1 Screenshot 1" width="480" >
+</a>
+<a href="https://auth1.hns.siasky.net/" target="_blank" rel="noopener noreferrer">
+  <img src="https://siasky.net/XAHH24WwFfkEHQTpQ59XXOA6XafyVzi3X3gT9yrJ7a1n4Q" alt="Auth1 Screenshot 2" width="480" >
+</a>
+
 
 ## Project setup
 ```
