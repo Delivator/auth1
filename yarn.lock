@@ -7671,10 +7671,10 @@ sjcl@^1.0.8:
   resolved "https://registry.yarnpkg.com/sjcl/-/sjcl-1.0.8.tgz#f2ec8d7dc1f0f21b069b8914a41a8f236b0e252a"
   integrity sha512-LzIjEQ0S0DpIgnxMEayM1rq9aGwGRG4OnZhCdjx7glTaJtf4zRfpg87ImfjSJjoW9vKpagd82McDOwbRT5kQKQ==
 
-skynet-js@^4.0.20-beta:
-  version "4.0.20-beta"
-  resolved "https://registry.yarnpkg.com/skynet-js/-/skynet-js-4.0.20-beta.tgz#acf5318f44dcacb467bc2df437b971ef8491a5fd"
-  integrity sha512-sm0UECmh79ZnzoNvKOl0YJuZG9TF6dfkc72WF9laHHtmoU5WWgI1DAirTP+szQSOPs8RFpTTJ0qr0Sh5CQIBrA==
+skynet-js@^4.0.22-beta:
+  version "4.0.22-beta"
+  resolved "https://registry.yarnpkg.com/skynet-js/-/skynet-js-4.0.22-beta.tgz#d4b199cdb6ac00f3859f2ac477d2668425546029"
+  integrity sha512-DpTCuMIT5JSBTwJX3nb/qkHVAFyCeEA8fanBGzZPj4QviYK3Mmk+lZKLETd5RzxavkBtgW7VlSogmxdTDjjbyg==
   dependencies:
     axios "^0.24.0"
     base32-decode "^1.0.0"

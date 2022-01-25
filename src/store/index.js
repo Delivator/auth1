@@ -4,7 +4,9 @@ import { SkynetClient } from "skynet-js";
 
 Vue.use(Vuex);
 
-const client = new SkynetClient(window.PORTAL.origin);
+const client = new SkynetClient(
+  window.location.hostname === "localhost" ? "https://siasky.net" : undefined
+);
 
 const dataDomain =
   window.location.hostname === "localhost" ? "localhost" : "auth1.hns";
