@@ -79,7 +79,7 @@
           <v-divider></v-divider>
 
           <v-card-actions class="grey darken-4">
-            <v-btn outlined color="green" @click="openScanner">
+            <v-btn outlined color="blue" @click="openScanner">
               QR-Scanner
               <v-icon right>qr_code_scanner</v-icon>
             </v-btn>
