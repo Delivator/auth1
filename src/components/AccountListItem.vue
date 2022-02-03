@@ -80,6 +80,7 @@
       </v-list-item>
     </v-hover>
     <v-divider v-if="index != length - 1" inset />
+    <v-list-item v-if="index === length - 1"></v-list-item>
   </div>
 </template>
 
