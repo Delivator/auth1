@@ -43,7 +43,6 @@ export default {
     },
 
     stopScanner() {
-      console.log("stopqrscanner");
       if (qrScanner) qrScanner.stop();
     },
 
