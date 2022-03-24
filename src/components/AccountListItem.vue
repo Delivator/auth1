@@ -32,7 +32,7 @@
         <v-list-item-content>
           <v-list-item-title v-text="item.name" class="text-h5">
           </v-list-item-title>
-          <v-list-item-subtitle class="text-h6 font-weight-light">
+          <v-list-item-subtitle class="text-h5 font-weight-light">
             <span class="mr-2">{{ code.substr(0, 3) }}</span>
             <span class="mr-1">{{ code.substr(3) }}</span>
             <v-tooltip bottom :value="copied">
@@ -74,8 +74,9 @@
           <v-progress-circular
             class="mt-2"
             :color="timeColor(countdown)"
-            :value="countdown * (100 / 30)"
-          ></v-progress-circular>
+            :value="100 - countdown * (100 / 30)"
+          >
+          </v-progress-circular>
         </v-list-item-icon>
       </v-list-item>
     </v-hover>
@@ -100,11 +101,10 @@
 import twoFA from "2fa-utils";
 
 export default {
-  props: ["item", "index", "length"],
+  props: ["item", "index", "length", "countdown"],
 
   data() {
     return {
-      countdown: (new Date().getSeconds() % 30) + 1,
       code: this.generateCode(),
       showContext: true,
       interval: null,
@@ -116,7 +116,6 @@ export default {
   mounted() {
     clearInterval(this.interval);
     this.interval = setInterval(() => {
-      this.countdown = (new Date().getSeconds() % 30) + 1;
       this.code = this.generateCode();
     }, 1000);
   },

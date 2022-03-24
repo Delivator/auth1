@@ -17,7 +17,7 @@
               </template>
             </v-text-field>
           </v-toolbar>
-          <AccountList :items="filteredAccounts" />
+          <AccountList :items="filteredAccounts" :countdown="countdown" />
         </v-card>
       </v-col>
     </v-row>
@@ -36,6 +36,8 @@ export default {
 
   data: () => ({
     search: "",
+    countdown: (new Date().getSeconds() % 30) + 1,
+    interval: null,
   }),
 
   computed: {
@@ -49,6 +51,22 @@ export default {
         account.name.toLowerCase().includes(this.search.toLowerCase())
       );
     },
+  },
+
+  methods: {
+    timeColor(time) {
+      if (time < 15) return "green";
+      if (15 <= time && time <= 20) return "lime";
+      if (20 <= time && time <= 25) return "orange";
+      if (25 < time) return "red lighten-2";
+    },
+  },
+
+  mounted() {
+    clearInterval(this.interval);
+    this.interval = setInterval(() => {
+      this.countdown = (new Date().getSeconds() % 30) + 1;
+    }, 1000);
   },
 };
 </script>

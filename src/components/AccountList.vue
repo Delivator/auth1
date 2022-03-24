@@ -2,6 +2,7 @@
   <v-list height="800" class="overflow-auto account-list">
     <AccountListItem
       v-for="(item, i) in items"
+      :countdown="countdown"
       :length="items.length"
       :item="item"
       :index="i"
@@ -61,7 +62,7 @@ import AddAccountDialog from "../components/AddAccountDialog";
 import AccountListItem from "../components/AccountListItem";
 
 export default {
-  props: ["items"],
+  props: ["items", "countdown"],
 
   components: {
     AddAccountDialog,

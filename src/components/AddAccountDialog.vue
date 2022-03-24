@@ -204,9 +204,12 @@ export default {
       const issuer = keyUri.searchParams.get("issuer");
       const secret = keyUri.searchParams.get("secret");
       if (!secret) return alert("Invalid QR Code");
-      const name = issuer
-        ? `${issuer} (${label[1].trim()})`
-        : `${label[0]} (${label[1].trim()})`;
+      let name = issuer ? `${issuer} (${label[0]})` : `${label[0]}`;
+      if (label.length > 1) {
+        name = issuer
+          ? `${issuer} (${label[1].trim()})`
+          : `${label[0]} (${label[1].trim()})`;
+      }
       this.name = name;
       this.secret = secret;
     },
