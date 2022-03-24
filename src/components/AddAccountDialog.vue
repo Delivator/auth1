@@ -9,7 +9,7 @@
     <v-dialog :value="show" width="500" @click:outside="close">
       <v-form @submit="addAccount" ref="form" v-model="valid">
         <v-card>
-          <v-card-title class="text-h5 primary">Add New Account</v-card-title>
+          <v-card-title class="text-h5 blue">Add New Account</v-card-title>
 
           <div class="ma-4">
             <v-tooltip v-if="logo" bottom>
@@ -65,6 +65,9 @@
               label="Secret"
               v-model="secret"
               :rules="secretRules"
+              :type="showSecret ? 'text' : 'password'"
+              @click:append="showSecret = !showSecret"
+              :append-icon="showSecret ? 'visibility' : 'visibility_off'"
             ></v-text-field>
 
             <input
@@ -78,15 +81,14 @@
 
           <v-divider></v-divider>
 
-          <v-card-actions class="grey darken-4">
-            <v-btn outlined color="blue" @click="openScanner">
+          <v-card-actions class="grey darken-4 pa-4">
+            <v-btn v-if="hasCamera" outlined color="blue" @click="openScanner">
               QR-Scanner
               <v-icon right>qr_code_scanner</v-icon>
             </v-btn>
             <v-spacer></v-spacer>
             <v-btn color="error" text @click="close">Cancel</v-btn>
             <v-btn
-              text
               type="submit"
               color="primary"
               @click="addAccount"
@@ -114,6 +116,7 @@
 
 <script>
 import QrScanner from "./QrScanner.vue";
+import Scanner from "qr-scanner";
 
 export default {
   props: ["show"],
@@ -132,7 +135,9 @@ export default {
       (v) => !!v || "Secret is required",
       (v) => /^[A-Z2-7=]+$/.test(v) || "Invalid Secret",
     ],
+    hasCamera: false,
     imgLoading: false,
+    showSecret: false,
     showScanner: false,
   }),
 
@@ -192,22 +197,25 @@ export default {
       this.showScanner = false;
     },
 
-    parseQr(string) {
+    parseUri(string) {
       const keyUri = new URL(string);
       if (!keyUri || !keyUri?.pathname.startsWith("//totp/")) return;
       const label = decodeURIComponent(keyUri.pathname.substr(7)).split(":");
       const issuer = keyUri.searchParams.get("issuer");
       const secret = keyUri.searchParams.get("secret");
       if (!secret) return alert("Invalid QR Code");
-      const name = issuer
-        ? `${issuer} (${label[1]})`
-        : `${label[0]} (${label[1]})`;
+      let name = issuer ? `${issuer} (${label[0]})` : `${label[0]}`;
+      if (label.length > 1) {
+        name = issuer
+          ? `${issuer} (${label[1].trim()})`
+          : `${label[0]} (${label[1].trim()})`;
+      }
       this.name = name;
       this.secret = secret;
     },
 
     onScan(string) {
-      this.parseQr(string);
+      this.parseUri(string);
     },
   },
 
@@ -221,6 +229,12 @@ export default {
           break;
       }
     });
+
+    Scanner.hasCamera()
+      .then((hasCamera) => {
+        this.hasCamera = hasCamera;
+      })
+      .catch(console.error);
   },
 };
 </script>

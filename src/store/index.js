@@ -126,6 +126,7 @@ const store = new Vuex.Store({
     async getProfile({ commit, state }) {
       if (!state.loggedIn) return;
 
+      state.appLoading = true;
       try {
         const userProfile = await state.mySky.getJSON(
           "profile-dac.hns/profileIndex.json"
@@ -142,6 +143,7 @@ const store = new Vuex.Store({
         console.error("error getting profile");
         console.error(error);
       }
+      state.appLoading = false;
     },
 
     async getUserSettings({ commit, state }) {

@@ -19,8 +19,13 @@
       </div>
 
       <div v-if="online">
+        <span
+          v-if="accounts.length > 0 && !mySky"
+          class="mr-4 text-h6 text--disabled"
+        >
+          Loading MySky...
+        </span>
         <span v-if="mySky" class="mr-4 text-h6">{{ username }}</span>
-        <span v-else class="mr-4 text-h6">Loading MySky...</span>
         <v-menu rounded="lg" offset-y>
           <template v-slot:activator="{ attrs, on }">
             <v-btn fab small v-bind="attrs" v-on="on">
@@ -147,6 +152,10 @@ export default {
 
     appLoading() {
       return this.$store.state.appLoading;
+    },
+
+    accounts() {
+      return this.$store.state.userSettings.accounts ?? [];
     },
   },
 
