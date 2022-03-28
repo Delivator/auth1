@@ -161,6 +161,18 @@ const store = new Vuex.Store({
       }
       state.appLoading = false;
     },
+
+    exportUserdata({ state }) {
+      if (!state.loggedIn) return;
+
+      const dataString =
+        "data:text/json;charset=utf-8," +
+        encodeURIComponent(JSON.stringify(state.userSettings, null, 2));
+      let downloadAnchor = document.createElement("a");
+      downloadAnchor.href = dataString;
+      downloadAnchor.download = "auth1-accounts.json";
+      downloadAnchor.click();
+    },
   },
 
   modules: {},

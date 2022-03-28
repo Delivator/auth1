@@ -68,6 +68,12 @@
               </v-list-item-icon>
             </v-list-item>
             <v-divider />
+            <v-list-item @click="exportUserdata">
+              <v-list-item-title>Export userdata</v-list-item-title>
+              <v-list-item-icon>
+                <v-icon>file_download</v-icon>
+              </v-list-item-icon>
+            </v-list-item>
             <v-list-item @click="dialog = true">
               <v-list-item-title>Reset all Accounts</v-list-item-title>
               <v-list-item-icon>
@@ -171,6 +177,10 @@ export default {
     resetAll() {
       this.$store.commit("setUserSettings", { accounts: [] });
       this.dialog = false;
+    },
+
+    exportUserdata() {
+      this.$store.dispatch("exportUserdata");
     },
 
     reload() {
